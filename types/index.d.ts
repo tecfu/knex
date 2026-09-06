@@ -2775,7 +2775,11 @@ declare namespace Knex {
     connectionPool?: ConnectionPool;
     pool?: PoolConfig;
     migrations?: MigratorConfig;
-    postProcessResponse?: (result: any, queryContext: any) => any;
+    postProcessResponse?: (
+      result: any,
+      queryContext: any,
+      context?: { driverResponse: any; runner: any }
+    ) => any;
     wrapIdentifier?: (
       value: string,
       origImpl: (value: string) => string,
@@ -3370,7 +3374,11 @@ declare namespace Knex {
     stream(connection: any, obj: any, stream: any, options: any): any;
     prepBindings(bindings: any): any;
     positionBindings(sql: any): any;
-    postProcessResponse(resp: any, queryContext: any): any;
+    postProcessResponse(
+      resp: any,
+      queryContext: any,
+      context?: { driverResponse: any; runner: any }
+    ): any;
     wrapIdentifier(value: any, queryContext: any): any;
     customWrapIdentifier(value: any, origImpl: any, queryContext: any): any;
     wrapIdentifierImpl(value: any): string;

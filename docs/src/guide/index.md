@@ -652,13 +652,19 @@ const knex = require('knex')({
 
 Hook for modifying returned rows, before passing them forward to user. One can do for example snake_case -> camelCase conversion for returned columns with this hook. The `queryContext` is only available if configured for a query builder instance via [queryContext](/guide/schema-builder.html#querycontext).
 
+An optional third argument `context` is also provided. It contains:
+
+- `driverResponse` – the raw response from the database driver (before `processResponse`)
+- `runner` – the `Runner` instance that executed the query
+
 ```js
 const knex = require('knex')({
   client: 'mysql',
   // overly simplified snake_case -> camelCase converter
-  postProcessResponse: (result, queryContext) => {
+  postProcessResponse: (result, queryContext, context) => {
     // TODO: add special case for raw results
     // (depends on dialect)
+    // context.driverResponse and context.runner are available when needed
     if (Array.isArray(result)) {
       return result.map((row) => convertToCamel(row));
     } else {
